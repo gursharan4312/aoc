@@ -22,12 +22,12 @@ for (let i = 0; i < arr1.length; i++) {
 console.log(sum)
 
 sum = 0;
-arr1.forEach(item => {
-  let times = 0;
-  arr2.forEach(num => {
-    if (num == item) times++;
-  })
-  sum += times * item;
+const map = {};
+arr2.forEach(num => {
+  map[num] = (map[num] ?? 0) + 1;
+})
+arr1.forEach(num => {
+  sum += (map[num] ?? 0) * num;
 })
 
 console.log(sum);
