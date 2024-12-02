@@ -1,38 +1,42 @@
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
+import java.util.stream.IntStream;
 
 class Main {
   public static void main(String[] args) throws IOException {
-    List<String> lines = Files.readAllLines(Paths.get("2-data.txt"));
-    int res = 0;
-    for (String line : lines) {
-      String[] parts = line.trim().split(" ");
-      if(isSafe(parts)) res++;
-      else{
-        for(int i=0;i<parts.length;i++){
-          String[] newArr = new String[parts.length-1];
-          for (int j = 0, k = 0; j < parts.length; j++) {
-            if (j != i) {
-              newArr[k++] = parts[j];
-            }
-          }
-          if(isSafe(newArr)){
-            res++;
-            break;
-          }
-        }
-      }
-    }
-    System.out.println(res);
+    var p1 = Files.lines(Paths.get("2-data.txt"))
+              .map(line->line.split("\\s+"))
+              .map(report->Arrays.stream(report)
+                          .mapToInt(Integer::parseInt)
+                          .toArray())
+              .filter(Main::isSafe)
+              .count();
+
+    System.out.println(p1);
+
+    var p2 = Files.lines(Paths.get("2-data.txt"))
+            .map(line->line.split("\\s+"))
+            .map(arr->Arrays.stream(arr).mapToInt(Integer::parseInt).toArray())
+            .filter(arr->{
+                if(isSafe(arr)) return true;
+                for(int i=0;i<arr.length;i++){
+                  int excludedIndex = i;
+                  int[] newArr = IntStream.range(0, arr.length)
+                  .filter(index -> index != excludedIndex)
+                  .map(index -> arr[index])
+                  .toArray();
+                  if(isSafe(newArr)) return true;
+                }
+                return false;
+            }).count();
+    System.out.println(p2);
   }
 
-  private static  boolean isSafe(String[] parts){
+  private static  boolean isSafe(int[] parts){
     boolean increasing = true,decreasing=true;
     for(int i=1;i<parts.length;i++){
-      int f= Integer.valueOf(parts[i-1]);
-      int s = Integer.valueOf(parts[i]);
-      int diff = s-f;
+      int diff = parts[i]-parts[i-1];
       if((Math.abs(diff) > 3 || Math.abs(diff) < 1)){
         return false;
       } 
