@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-let str = fs.readFileSync(path.resolve(__dirname, '1-data.txt'), 'utf8')
+let str = fs.readFileSync(path.resolve(__dirname, 'input.txt'), 'utf8')
 
 const arr1 = [], arr2 = [];
 

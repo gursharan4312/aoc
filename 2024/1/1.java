@@ -24,7 +24,7 @@ class Main {
     // arr2.add(Integer.parseInt(parts[1]));
     // }
 
-    List<String> lines = Files.readAllLines(Paths.get("1-data.txt"));
+    List<String> lines = Files.readAllLines(Paths.get("input.txt"));
     for (String line : lines) {
       String[] parts = line.split("   ");
       arr1.add(Integer.parseInt(parts[0]));
