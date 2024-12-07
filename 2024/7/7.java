@@ -15,12 +15,12 @@ class Main {
         .toArray(long[][]::new);
 
     for (long[] line : lines) {
-      if (canCalibrate(0, line[0], 1, line))
+      if (canCalibrate(line[1], line[0], 2, line))
         sum += line[0];
     }
 
     for (long[] line : lines) {
-      if (canCalibratePart2(0, line[0], 1, line))
+      if (canCalibratePart2(line[1], line[0], 2, line))
         sum2 += line[0];
     }
 
@@ -34,7 +34,7 @@ class Main {
     if (currSum > sum || i >= line.length || line.length <= 1)
       return false;
     return canCalibrate(currSum + line[i], sum, i + 1, line)
-        || canCalibrate((i == 1 ? 1 : currSum) * line[i], sum, i + 1, line);
+        || canCalibrate(currSum * line[i], sum, i + 1, line);
   }
 
   public static boolean canCalibratePart2(long currSum, long sum, int i, long[] line) {
@@ -43,7 +43,7 @@ class Main {
     if (currSum > sum || i >= line.length || line.length <= 1)
       return false;
     return canCalibratePart2(currSum + line[i], sum, i + 1, line)
-        || canCalibratePart2((i == 1 ? 1 : currSum) * line[i], sum, i + 1, line)
+        || canCalibratePart2(currSum * line[i], sum, i + 1, line)
         || canCalibratePart2(Long.parseLong(("" + currSum + line[i])), sum, i + 1, line);
   }
 }
