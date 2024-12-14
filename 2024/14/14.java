@@ -36,7 +36,7 @@ class Main {
         set.add(key);
       }
       if (set.size() == arr.length) {
-        System.out.println(seconds);
+        System.out.println(seconds + 1);
         for (var item : space) {
           for (var item2 : item) {
             System.out.print(item2 > 0 ? "#" : " ");
